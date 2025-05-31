@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Answer To You - Stylish Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom font for a more personal touch */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&family=Great+Vibes&family=Pacifico&family=Dancing+Script:wght@400;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            /* More dynamic background with a subtle pattern */
+            background: linear-gradient(to bottom right, #ffdde1, #ee9ca7); /* Soft, warm gradient */
+            background-image: radial-gradient(circle at top left, rgba(255,255,255,0.1) 1%, transparent 60%),
+                              radial-gradient(circle at bottom right, rgba(255,255,255,0.1) 1%, transparent 60%);
+            background-size: 100% 100%;
+        }
+        .main-card {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white for depth */
+            backdrop-filter: blur(5px); /* Frosted glass effect */
+            border: 5px solid;
+            border-image: linear-gradient(to right, #ff7e5f, #feb47b) 1; /* Gradient border */
+            animation: fadeInScale 1s ease-out forwards; /* Initial entrance animation */
+        }
+        .proposal-text {
+            font-family: 'Dancing Script', cursive; /* New font for the main message */
+            text-shadow: 3px 3px 6px rgba(0,0,0,0.15); /* More pronounced shadow */
+            background: linear-gradient(to right, #833ab4, #fd1d1d, #fcb045); /* Instagram-like gradient */
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        /* Custom styling for the button with a subtle animation */
+        .reveal-button {
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Stronger shadow */
+            background-size: 200% auto; /* For gradient animation */
+        }
+        .reveal-button:hover {
+            transform: translateY(-3px) scale(1.02); /* More pronounced lift and slight scale */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            background-position: right center; /* Animate gradient */
+        }
+
+        /* Keyframes for a subtle heart pulse animation */
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.15); /* Slightly stronger pulse */
+            }
+        }
+
+        /* Keyframes for a more intense, short burst pulse for hearts */
+        @keyframes burstPulse {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.3); } /* Larger scale */
+            50% { transform: scale(1); }
+            75% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* Keyframes for initial fade-in and scale of the main card */
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .heart-icon {
+            animation: pulse 1.8s infinite ease-in-out; /* Apply pulse animation, slightly slower */
+            display: inline-block; /* Ensure proper spacing */
+            filter: drop-shadow(2px 2px 3px rgba(0,0,0,0.1)); /* Subtle shadow for hearts */
+        }
+
+        .heart-icon.burst {
+            animation: burstPulse 0.8s ease-out forwards; /* Apply burst pulse on reveal */
+        }
+
+
+        /* Confetti effect (optional, but adds a nice touch!) */
+        .confetti-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none; /* Allows clicks to pass through */
+        }
+        .confetti-item { /* Unified class for falling hearts and stars */
+            position: absolute;
+            opacity: 0;
+            animation: confetti-fall 3s linear forwards;
+            transform-origin: center;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotateZ(0deg) scale(0.8);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotateZ(720deg) scale(1.2); /* More rotation and slight scale change */
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen p-4">
+    <div class="main-card p-8 md:p-12 rounded-3xl shadow-2xl max-w-lg w-full text-center transform hover:scale-105 transition-all duration-500 ease-in-out">
+        <h1 class="text-4xl md:text-5xl font-bold text-pink-600 mb-6">
+            To My Boy
+        </h1>
+
+        <p class="text-lg md:text-xl text-gray-700 mb-8 leading-relaxed">
+            Your question filled my heart with so much happiness.
+            I have a very special answer for you.
+        </p>
+
+        <button id="revealBtn" class="reveal-button bg-gradient-to-r from-pink-500 to-rose-500 text-white font-bold py-3 px-8 rounded-full text-xl md:text-2xl hover:from-pink-600 hover:to-rose-600 focus:outline-none focus:ring-4 focus:ring-pink-300 mb-8">
+            Click to See My Answer
+        </button>
+
+        <div id="proposalMessage" class="hidden">
+            <p class="proposal-text text-3xl md:text-4xl font-bold mb-6">
+                Yes, I love you!
+            </p>
+            <div class="flex justify-center items-center space-x-4 mb-4">
+                <svg class="heart-icon w-24 h-24 text-red-500" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <svg class="heart-icon w-16 h-16 text-pink-500" style="animation-delay: 0.2s;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+                <svg class="heart-icon w-16 h-16 text-purple-500" style="animation-delay: 0.4s;" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                </svg>
+            </div>
+            <p class="text-md md:text-lg text-gray-600">
+                With all my heart. ❤️
+            </p>
+        </div>
+    </div>
+
+    <div id="confetti-container" class="confetti-container hidden"></div>
+
+    <script>
+        // Get references to the button, the message div, and the confetti container
+        const revealBtn = document.getElementById('revealBtn');
+        const proposalMessage = document.getElementById('proposalMessage');
+        const confettiContainer = document.getElementById('confetti-container');
+        const heartIcons = document.querySelectorAll('.heart-icon'); // Get all heart icons
+
+        // SVG paths for heart and star
+        const heartSVGPath = '<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>';
+        const starSVGPath = '<path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>';
+
+        // Function to create and animate confetti (now with hearts and stars)
+        function createConfetti() {
+            const numItems = 150; // Increased total number of falling items
+            const colors = ['#ffc0cb', '#a78bfa', '#fca5a5', '#93c5fd', '#ffe082', '#b39ddb', '#FFD700', '#ADFF2F']; // More colors, including gold and green
+            const shapes = ['heart', 'star'];
+
+            for (let i = 0; i < numItems; i++) {
+                const itemType = shapes[Math.floor(Math.random() * shapes.length)];
+                const item = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                item.setAttribute('viewBox', '0 0 24 24');
+                item.setAttribute('fill', colors[Math.floor(Math.random() * colors.length)]);
+                item.classList.add('confetti-item');
+
+                if (itemType === 'heart') {
+                    item.innerHTML = heartSVGPath;
+                    item.style.width = (15 + Math.random() * 15) + 'px'; // Larger hearts
+                    item.style.height = (15 + Math.random() * 15) + 'px'; // Larger hearts
+                } else { // star
+                    item.innerHTML = starSVGPath;
+                    item.style.width = (10 + Math.random() * 10) + 'px'; // Stars
+                    item.style.height = (10 + Math.random() * 10) + 'px'; // Stars
+                }
+
+                item.style.left = Math.random() * 100 + 'vw'; // Random horizontal position
+                item.style.animationDelay = Math.random() * 3 + 's'; // Longer random delay
+                item.style.animationDuration = (4 + Math.random() * 4) + 's'; // Longer, more varied duration
+                item.style.transform = `translateY(-100px) rotateZ(${Math.random() * 360}deg)`; // Initial random position and rotation
+
+                confettiContainer.appendChild(item);
+            }
+        }
+
+        // Add an event listener to the button
+        revealBtn.addEventListener('click', () => {
+            // Hide the button
+            revealBtn.classList.add('hidden');
+            // Show the proposal message with a fade-in effect
+            proposalMessage.classList.remove('hidden');
+            proposalMessage.style.opacity = '0'; // Start invisible
+            setTimeout(() => {
+                proposalMessage.style.transition = 'opacity 1s ease-in'; // Add transition
+                proposalMessage.style.opacity = '1'; // Fade in
+
+                // Trigger a stronger, immediate pulse on hearts
+                heartIcons.forEach(heart => {
+                    heart.classList.add('burst');
+                    // Remove the class after the animation to allow normal pulse to resume
+                    heart.addEventListener('animationend', () => {
+                        heart.classList.remove('burst');
+                    }, { once: true });
+                });
+
+            }, 10); // Small delay to ensure transition applies
+
+            // Show confetti and trigger animation
+            confettiContainer.classList.remove('hidden');
+            createConfetti();
+
+            // Clear confetti after some time to prevent too many elements
+            setTimeout(() => {
+                confettiContainer.innerHTML = ''; // Clear all confetti
+                confettiContainer.classList.add('hidden');
+            }, 8000); // Clear after 8 seconds (longer duration for more items)
+        });
+    </script>
+</body>
+</html>
